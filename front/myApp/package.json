@@ -1,0 +1,36 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "deploy": "npx expo export -p web && npx eas-cli@latest deploy"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "expo": "^54.0.1",
+    "expo-camera": "~17.0.8",
+    "expo-router": "~6.0.0",
+    "expo-secure-store": "^15.0.7",
+    "jwt-decode": "^4.0.0",
+    "nativewind": "^4.2.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.4",
+    "react-native-camera": "^4.2.1",
+    "react-native-camera-kit": "^16.1.2",
+    "react-native-paper": "^5.14.5",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-svg": "^15.13.0",
+    "react-native-toast-message": "^2.3.3",
+    "react-native-web": "^0.21.0",
+    "tailwindcss": "^3.4.17"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/react": "~19.1.10"
+  }
+}
