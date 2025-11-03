@@ -7,8 +7,14 @@ export async function getAllSupermercados(token: string) {
 }
 
 // Create a new Supermercado
-export async function createSupermercado(nome: string, endereco: string, token: string) {
-  const body = { nome, endereco };
+export async function createSupermercado(
+  nome: string,
+  endereco: string,
+  Latitude: string,
+  Longitude: string,
+  token: string
+) {
+  const body = { nome, endereco, Latitude, Longitude };
   return apiRequest<Supermercado>("/supermercado", "POST", body, token); // POST request to create supermercado
 }
 

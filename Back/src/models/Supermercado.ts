@@ -23,4 +23,16 @@ export default class Supermercado extends Model {
         allowNull: false
     })
     endereco!: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false
+    })
+    Latitude!: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false
+    })
+    Longitude!: string;
 }

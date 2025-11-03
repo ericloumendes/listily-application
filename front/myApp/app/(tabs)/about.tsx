@@ -2,13 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import { Card, Button, Snackbar, Searchbar } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
-import { getListas } from "../../services/lista_service";
+import { getListasCached } from "../../services/lista_service";
 import { router, useFocusEffect } from "expo-router";
 import { Lista } from "../../interfaces/lista_interface";
 import Toast from "react-native-toast-message";
+import { useOffline } from "../../context/OfflineContext";
+import OfflineBanner from "../../components/OfflineBanner";
+import * as Network from "expo-network";
 
 export default function AboutScreen() {
   const { token } = useAuth();
+  const { offline, setOffline } = useOffline();
   const [listas, setListas] = useState<Lista[]>([]);
   const [filteredListas, setFilteredListas] = useState<Lista[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,16 +25,39 @@ export default function AboutScreen() {
 
   useFocusEffect(useCallback(() => {
     const fetchListas = async () => {
-      if (token) {
-        try {
-          const listasData = await getListas(token);
-          setListas(listasData);
-          setFilteredListas(listasData); // Initialize filtered with all Listas
-        } catch (err) {
-          Toast.show({ type: "error", text1: "Nenhuma lista encontrada." });
-        } finally {
-          setLoading(false);
+      if (!token) return;
+      setLoading(true);
+      let online = true;
+      try {
+        const state = await Network.getNetworkStateAsync();
+        online = !!state.isConnected && state.isInternetReachable !== false;
+      } catch {}
+      setOffline(!online);
+
+      try {
+        const { data } = await getListasCached(token);
+        setListas(Array.isArray(data) ? data : []);
+        setFilteredListas(Array.isArray(data) ? data : []);
+        // If we could fetch (from network or cache), and device reports online, force online
+        if (online) setOffline(false);
+        if (online && Array.isArray(data) && data.length === 0) {
+          Toast.show({ type: "info", text1: "Nenhuma lista encontrada." });
         }
+      } catch (err) {
+        // Determine connectivity again; if offline, do not show error toast
+        try {
+          const state = await Network.getNetworkStateAsync();
+          online = !!state.isConnected && state.isInternetReachable !== false;
+        } catch {}
+        setOffline(!online);
+        if (online) {
+          const msg = err instanceof Error ? err.message : String(err);
+          // Only show when online and not an empty/404 case
+          const is404 = /^HTTP\s+404/.test(msg) || /nenhuma\s+lista\s+encontrada/i.test(msg);
+          if (!is404) Toast.show({ type: "error", text1: msg || "Erro ao carregar listas." });
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -60,6 +87,7 @@ export default function AboutScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Suas Listas</Text>
+      {offline && <OfflineBanner />}
 
       {/* Searchbar */}
       <Searchbar
@@ -84,6 +112,7 @@ export default function AboutScreen() {
       <Button
         mode="contained"
         onPress={() => router.push("/create-lista")}
+        disabled={offline}
         style={styles.createBtn}
       >
         Criar Nova Lista

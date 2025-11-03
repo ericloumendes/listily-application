@@ -2,9 +2,27 @@
   "expo": {
     "scheme": "acme",
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
     ],
-    "name": "myApp",
-    "slug": "myApp"
+    "name": "listily",
+    "slug": "listily",
+    "android": {
+      "package": "com.ericloumendes.listily",
+      "versionCode": 1
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "34dc5f93-45a7-40d3-ba2e-8ab512413eee"
+      }
+    }
   }
 }
