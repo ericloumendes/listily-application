@@ -23,23 +23,23 @@ O Listily é um aplicativo projetado para ajudar os usuários a comparar preços
 
 # 🎯 Backlog do Produto
 
-| RFN | Rank | Prioridade | User story | Estimativa | Sprint | Critérios de aceitação |
-|-----|------|------------|------------|------------|--------|-------------------------|
-| 04 | 01 | Alta | Eu como ADMINISTRADOR e USUÁRIO COMUM desejo visualizar as estações conectadas | 08 | 1 | - TODOS OS USUÁRIOS devem visualizar as estações conectadas; <br> - Todas as estações devem exibir o nome e imagem referente; <br> - Paginação contendo 15 itens cada; Barra de pesquisa por nome; |
-| 04 | 02 | Alta | Eu como ADMINISTRADOR E USUÁRIO COMUM desejo visualizar os parâmetros dentro de uma estação. | 03 | 1 | - TODOS OS USUÁRIOS devem visualizar os parâmetros das estações e suas devidas unidades se cadastradas; <br> - Parâmetros sem unidade de medida definida devem ser sinalizados por meio um elemento gráfico; |
-| 04 | 03 | Alta | Eu como ADMINISTRADOR desejo cadastrar e alterar parâmetros de uma estação. | 05 | 1 | - O ADMINISTRADOR deve conseguir alterar as unidades de medida dos parâmetros de uma estação em específico; <br> - Os parâmetros não alterados devem permanecer com seus respectivos valores após alteração de outros; <br> - Deve ser gravada a data da alteração de tal parâmetro; |
-| 04 | 04 | Alta | Eu como ADMINISTRADOR desejo alterar o nome e imagem da estação conectada. | 02 | 1 | - O ADMINISTRADOR deve conseguir alterar o nome e imagem de uma estação; <br> - O nome ou imagem não alterado deve permanecer o mesmo após alteração do outro; <br> - Nome é um campo obrigatório; |
-| 07 | 05 | Alta | Eu como ADMINISTRADOR desejo efetuar login para acessar funcionalidades exclusivas do meu papel. | 08 | 1 | - O ADMINISTRADOR deve conseguir efetuar login devidamente na aplicação; |
-| 07 | 06 | Baixa | Eu como SUPER ADMINISTRADOR desejo cadastrar outros usuários administradores para facilitar a administração da aplicação. | 03 | 1 | - O SUPER ADMINISTRADOR deve conseguir cadastrar devidamente um novo administrador; | 
-| 07 | 07 | Baixa | Eu como ADMINISTRADOR desejo alterar minhas próprias informações de cadastro para a manutenção do perfil. | 02 | 1 | - O ADMINISTRADOR deve conseguir alterar suas informações com sucesso; |
-| 05 | 08 | Baixa |Eu como ADMINISTRADOR desejo cadastrar tipos de alertas para visualizar que tipo de alertas os usuários poderão receber. | 03 | 1 | - O ADMINISTRADOR deve conseguir cadastrar/editar tipos com sucesso; <br> - TODOS OS USUÁRIOS devem poder visualizar os tipos de alertas cadastrados | 
-| 02 | 09 | Alta | Eu como ADMINISTRADOR desejo receber dados simulados para alimentar a aplicação. | 13 | 2 | A aplicação deve receber dados (mockados por hora) dos sensores devidamente; <br> - A aplicação deve armazenar os dados da aplicação devidamente; <br> - A aplicação deve garantir a recepção dos dados mesmo sob requisições grandes; |
-| 02 | 10 | Alta | Eu como ADMINISTRADOR E USUÁRIO COMUM desejo que os dados recebidos sejam interpretados para dados palpáveis. | 05 | 2 | - A aplicação deve interpretar os dados recebidos conforme os parâmetros configurados por estação. | 
-| 03 | 11 | Média | Eu como ADMINISTRADOR E USUÁRIO COMUM desejo visualizar uma dashboard com gráficos informativos sobre a variação dos parâmetros das estações. | 08 | 2 | As dashboards devem possuir filtros por período e estação; <br> - O usuário deve ter a capacidade de definir a unidade de medida padrão da dashboard; <br> - As dashboards devem apresentar conceitos estatísticos; | 
-| 01 | 13 | Alta | Eu como ADMINISTRADOR desejo conectar estações à aplicação para poder exibir e manipular seus parâmetros. | 05 | 3 | - A estação deve ter a capacidade de se conectar a aplicação por wifi; <br> - A instalação da estação deve ser simples e rápida; |
-| 02 | 14 | Alta | Eu como ADMINISTRADOR desejo receber parâmetros das estações para administrar e visualizar tais dados. | 08 | 3 | - A estação deve coletar os parâmetros à partir dos sensores e enviá-los para o broker (datalogger); <br> - A estação deve garantir que, mesmo que um data não tenha sida coletado devidamente, os outros sejam enviados sem problemas; |
-| 05 | 15 | Média | Eu como ADMINISTRADOR E USUÁRIO COMUM desejo receber alertas sobre condições meteorológicas extremas. | 08 | 3 | - O ADMINISTRADOR E USUÁRIO COMUM devem receber alertas sob condições meteorológicas extremas; <br> - O alerta deve ser exibido tanto em notificação do website bem como fora dele (Notificações do navegador); |
-| 06 | 16 | Baixa | Eu como USUÁRIO COMUM desejo visualizar guias explicativos sobre os parâmetros e sua coleta para compreender os conceitos físicos por trás dos mesmos. | 05 | 3 | Os guias devem ser ilustrados atrativos para o público infanto-juvenil; <br> - Todos os parâmetros devem apresentar os guias com informações sobre, a coleta, a unidade de medida, a física e no que isso afeta o ambiente (no caso de situação excessiva ou escassa); <br> - Além disso guias sobre a estação; |
+| Rank | Prioridade | User story | Estimativa | Sprint | Critérios de aceitação |
+|------|------------|------------|------------|--------|-------------------------|
+| 01 | Alta | Eu como USUÁRIO COMUM e FUNCIONÁRIO DE SUPERMERCADO SUPORTADO desejo efetuar login na aplicação para vizualizar minhas informações. | 05 | 1 | - O usuário deve conseguir efetuar login devidamente na aplicação; <br> - As informações de um usuário devem pertencer apenas À ele; |
+| 02| Alta | Eu como USUÁRIO COMUM e FUNCIONÁRIO DE SUPERMERCADO SUPORTADO desejo cadastrar valores bem como os produtos que não encontrei no aplicativo para manter o catálogo do app atualizado. | 08 | 1 | - O usuário deve ser capaz de cadastrar um produto devidamente; <br> O usuário deve ser capaz de atualizar o preço de produto após ter vizualizado-o com preço diferente; |
+| 03 | Alta | Eu FUNCIONÁRIO DE SUPERMERCADO SUPORTADO desejo cadastrar na aplicação o supermercado em que trabalho para que eu possa adicionar os produtos do meu supermercado ao catálogo do app. | 05 | 1 | - O usuário deve ser capaz de cadastrar um supermercado na aplicação; <br> O usuário deve ser capaz de atrelar um produto ao supermercado; |
+| 04 | Alta | Eu como USUÁRIO COMUM desejo pesquisar produtos pelo código de barras ou nome para compara o preço daquele produto em diferentes supermercados | 03 | 1 | - O usuário deve conseguir buscar produtos por seu código de barras devidamente; |
+| 05 | Alta | Eu como USUÁRIO COMUM desejo criar uma lista de compras para que eu possa administrar produtos que desejo comprar com o preço ideal. | 03 | 1 | - O Usuário deve conseguir cadastrar uma lista de compras devidamente; O usuário deve ser capaz de Adicionar e remover produtos aquela lista; |
+| 06 | Média | Eu como USUÁRIO COMUM desejo possuir um mapa interativo para vizualizar todos os supermercados suportados pelo app. | 05 | 2 | - O Usuário deve conseguir vizualizar um mapa interativo e ver pontos que marquem a localização dos supermercados cadastrados; | 
+| 07 | Média | Eu como USUÁRIO COMUM devo conseguir traçar uma rota optimizada à partir de uma lista de compras para assim economizar não só apenas dinheiro como também tempo. | 08 | 2 | - O usuário deve vizualizar uma rota optimizada até os supermercados que possuam os produtos pertencentes à lista selecionada; <br> - O mapa deve exibir um numeral para facilitar a idêntificação da ordem de ida até aquele supermercado; |
+| 08 | Média | Eu como USUÁRIO COMUM desejo acessar minhas listas mesmo em modo offline para que mesmo em situações sem internet eu saiba o que e onde comprar. | 03 | 2 | - O usuário deve ser capaz de acessa susas listas mesmo sem internet devidamente; <br> - As demais funções do app devem ser desativadas para evitar comparações de preços equivocadas e desatualizadas; | 
+| 09 | Média | Eu como USUÁRIO COMUM desejo exportar minhas listas para pdf facilitando sua impressão e vizualização fora do app | 05 | 2 | - O pdf deve exibir os produtos com preços; <br> - O pdf deve exibir os produtos agrupados por supermerado; |
+| 10 | Baixa | Eu como USUÁRIO COMUM e FUNCIONÁRIO DE SUPERMERCADO SUPORTADO desejo efetuar login a partir de minhas redes sociais para facilitar o processo de login. | 05 | 3 | - A aplicação deve fornecer suporte À login por redes sociais à partir das principais redes. | 
+| 11 | Baixa | Eu como USUÁRIO COMUM desejo receber notificações inteligentes para saber quando um produto que compro com frequência entrar em promoção. | 05 | 3 | - A aplicação deve exibir notificações assim que o preço de um produto comprado anteriormente cair; | 
+| 12 | Baixa | Eu como USUÁRIO COMUM desejo visualizar no mapa interativo super-mercados com ofertas especiais para facilitar esse acesso próximo. | 05 | 3 | - O mapa deve exibir informações detalhadas daquele supermercado (horaário de funcionamento e etc) além de exibir os produtos com ofertas especiais |
+| 13 | Baixa | Eu como USUÁRIO COMUM desejo que os produtos tenham seus preços atualizados automáticamente para que eu tenha uma maior confiabilidade no preço exibido pelo app. | 08 | 3 | - Deve ser feita uma API que raspe tais dados de supermercados, incluindo ofertas especiais e preços de clube; |
+| 14 | Baixa | Eu como USUÁRIO COMUM desejo visualizar guias financeiros informativos para que eu possa aprender a minimizar meus gastos enquanto comprando. | 02 | 3 | - O guia deve ser simples e lúdico; |
+| 15 | Baixa | Eu como USUÁRIO COMUM desejo trocar o tema do aplicativo para melhorar minha expriência. | 02 | 3 | - O aplicativo deve conter os temas claro (padrão) e escuro apenas; |
 
 <br>
 
@@ -48,11 +48,11 @@ O Listily é um aplicativo projetado para ajudar os usuários a comparar preços
 # 🏁 Entregas de Sprints
 
 Cada entrega foi realizada a partir da criação de uma **tag** em cada repositório, além da criação de uma branch neste repositório com um relatório completo de tudo o que foi desenvolvido naquela sprint.
-| Sprint | Previsão de entrega | Status | Histórico |
-|:--:|:----------:|:-------------------|:-------------------------------------------------:|
-| 01 | 08/09/2025 a 28/09/2025 | Em andamento | [Ver relatório]() |
-| 02 | 06/10/2025 a 26/10/2025 | Em breve | [Ver relatório]() |
-| 03 | 03/11/2025 a 23/11/2025 | Em breve |  [Ver relatório]()|
+| Sprint | Previsão de entrega | Status |
+|:--:|:----------:|:-------------------|
+| 01 | 08/09/2025 a 28/09/2025 | Concluído |
+| 02 | 06/10/2025 a 26/10/2025 | Concluído |
+| 03 | 03/11/2025 a 23/11/2025 | Em breve |
 
 <br />
 
