@@ -224,7 +224,16 @@ const styles = StyleSheet.create({
   emptyText: { textAlign: "center", marginTop: 20, color: "#aaa" },
   anchorButton: { marginTop: 8, color: "#2E7D32" }, // Green "Atualizar valor" button
   productImage: { width: 100, height: 100, marginBottom: 8, borderRadius: 8 },
-  camera: { flex: 1, justifyContent: "flex-end" },
+  camera: { 
+    position: 'absolute',
+    top: '50%',
+    left: '5%',
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '50%',
+    zIndex: 1000,
+  },
     dividerRow: {
     flexDirection: "row",
     alignItems: "center",

@@ -2,6 +2,7 @@ import { Slot } from "expo-router";
 import { MD3LightTheme as DefaultTheme, PaperProvider } from "react-native-paper";
 import { AuthProvider } from "../context/AuthContext";
 import Toast from "react-native-toast-message";
+import { OfflineProvider } from "../context/OfflineContext";
 
 const theme = {
   ...DefaultTheme,
@@ -16,10 +17,12 @@ const theme = {
 export default function RootLayout() {
   return (
     <AuthProvider>
-    <PaperProvider theme={theme}>
-      <Slot />
-      <Toast /> {/* ✅ Toast container */}
-    </PaperProvider>
+      <OfflineProvider>
+        <PaperProvider theme={theme}>
+          <Slot />
+          <Toast />
+        </PaperProvider>
+      </OfflineProvider>
     </AuthProvider>
   );
 }

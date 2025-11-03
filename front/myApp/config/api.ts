@@ -1,5 +1,5 @@
 export const connection_urls = {
-    BACKEND_URL: 'http://10.109.23.165:5000'
+    BACKEND_URL: 'http://localhost:5000'
 }
 
 const BASE_URL = connection_urls.BACKEND_URL // <- update me
