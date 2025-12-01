@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
-import { Card, Button, Snackbar, Searchbar } from "react-native-paper";
+import { Card, Button, Snackbar, Searchbar, useTheme } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
 import { getListasCached } from "../../services/lista_service";
 import { router, useFocusEffect } from "expo-router";
@@ -9,8 +9,10 @@ import Toast from "react-native-toast-message";
 import { useOffline } from "../../context/OfflineContext";
 import OfflineBanner from "../../components/OfflineBanner";
 import * as Network from "expo-network";
+import { checkAndNotifyForNewOfertas } from "../../services/ofertas_notifier";
 
 export default function AboutScreen() {
+  const theme = useTheme();
   const { token } = useAuth();
   const { offline, setOffline } = useOffline();
   const [listas, setListas] = useState<Lista[]>([]);
@@ -38,6 +40,20 @@ export default function AboutScreen() {
         const { data } = await getListasCached(token);
         setListas(Array.isArray(data) ? data : []);
         setFilteredListas(Array.isArray(data) ? data : []);
+        try {
+          const produtos = (Array.isArray(data) ? data : [])
+            .flatMap(l => (l.produtos || []))
+            .filter(p => p && typeof p.pk === 'number');
+          const seen = new Set<number>();
+          const unique = produtos.filter(p => {
+            if (seen.has(p.pk)) return false;
+            seen.add(p.pk);
+            return true;
+          }).map(p => ({ pk: p.pk, nome: p.nome }));
+          if (unique.length) {
+            await checkAndNotifyForNewOfertas(unique, token);
+          }
+        } catch {}
         // If we could fetch (from network or cache), and device reports online, force online
         if (online) setOffline(false);
         if (online && Array.isArray(data) && data.length === 0) {
@@ -85,8 +101,8 @@ export default function AboutScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Suas Listas</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Suas Listas</Text>
       {offline && <OfflineBanner />}
 
       {/* Searchbar */}
@@ -102,11 +118,11 @@ export default function AboutScreen() {
         data={filteredListas}
         keyExtractor={(item) => item.pk.toString()}
         renderItem={renderLista}
-        ListEmptyComponent={<Text style={styles.emptyText}>Nenhuma Lista encontrada.</Text>}
+        ListEmptyComponent={<Text style={[styles.emptyText, { color: theme.colors.onBackground }]}>Nenhuma Lista encontrada.</Text>}
       />
 
       {/* Loading state */}
-      {loading && <Text>Carregando...</Text>}
+      {loading && <Text style={{ color: theme.colors.onBackground }}>Carregando...</Text>}
 
       {/* Button to navigate to Create Lista screen */}
       <Button
@@ -132,12 +148,12 @@ export default function AboutScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  container: { flex: 1, padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   card: { marginBottom: 16, borderRadius: 8 },
   cardTitle: { fontSize: 18, fontWeight: "bold" },
   cardSubtitle: { fontSize: 14, color: "#555" },
-  emptyText: { textAlign: "center", marginTop: 20, color: "#aaa" },
+  emptyText: { textAlign: "center", marginTop: 20 },
   searchbar: { marginBottom: 20 },
   createBtn: { marginTop: 20, alignSelf: "center", width: "60%" },
 });

@@ -4,6 +4,7 @@ import ListaProduto from './ListaProduto';
 import Supermercado from './Supermercado';
 import Preco from './Preco';
 import Categoria from './Categoria';
+import Ofertas from './Ofertas';
 
 @Table({
     tableName: 'produtos',
@@ -50,6 +51,9 @@ export default class Produto extends Model {
 
     @HasMany(() => Preco, 'produto_pk')
     precos!: Preco[];
+
+    @HasMany(() => Ofertas, 'produto_pk')
+    ofertas!: Ofertas[];
 
     // Static method to search by codigo_barras
     static async findByCodigoBarras(codigo_barras: string) {

@@ -7,6 +7,7 @@ import ListaProduto from '../models/ListaProduto';
 import Supermercado from '../models/Supermercado';
 import Preco from '../models/Preco';
 import Categoria from '../models/Categoria';
+import Ofertas from '../models/Ofertas';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ const sequelize = new Sequelize({
   host: process.env.DB_HOST, // colocar domínio
   port: parseInt(process.env.DB_PORT), // colocar porta
   dialect: 'postgres', // colocar o banco de dados utilizado
-  models: [Usuario, Lista, Produto, ListaProduto, Supermercado, Preco, Categoria],  // Adicionar os modelos a serem trabalhados aqui
+  models: [Usuario, Lista, Produto, ListaProduto, Supermercado, Preco, Categoria, Ofertas],  // Adicionar os modelos a serem trabalhados aqui
 });
 
 export default sequelize;

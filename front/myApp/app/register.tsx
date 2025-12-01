@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Text, TextInput, Button, HelperText, Snackbar } from "react-native-paper";
+import { Text, TextInput, Button, HelperText, Snackbar, useTheme } from "react-native-paper";
 import { router } from "expo-router";
 import { registerUsuario } from "../services/usuario_service";
 import { Usuario } from "../interfaces/usuario_interface";
 import Toast from "react-native-toast-message";
 
 export default function RegisterScreen() {
+  const theme = useTheme();
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -54,7 +55,7 @@ export default function RegisterScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Logo */}
       <View style={styles.header}>
         <Image
@@ -62,7 +63,7 @@ export default function RegisterScreen() {
           style={styles.logo}
           resizeMode="contain"
         />
-        <Text variant="headlineLarge" style={styles.brand}>
+        <Text variant="headlineLarge" style={[styles.brand, { color: theme.colors.onBackground }]}>
           listily
         </Text>
       </View>
@@ -138,7 +139,7 @@ export default function RegisterScreen() {
         </Button>
 
         <Text
-          style={styles.bottomLink}
+          style={[styles.bottomLink, { color: theme.colors.onBackground }]}
           onPress={() => router.replace("/login")}
         >
           Já tem uma conta? Entrar
@@ -159,7 +160,7 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", paddingHorizontal: 20 },
+  container: { flex: 1, paddingHorizontal: 20 },
   header: { alignItems: "center", marginTop: 24, marginBottom: 8 },
   logo: { width: 140, height: 140, marginBottom: 4 }, // increased size of the logo
   brand: { color: "#2f6f46", fontWeight: "700", letterSpacing: 0.5 },

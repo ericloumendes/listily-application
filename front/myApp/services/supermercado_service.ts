@@ -12,9 +12,11 @@ export async function createSupermercado(
   endereco: string,
   Latitude: string,
   Longitude: string,
+  horario_funcionamento_inicio: string,
+  horario_funcionamento_fim: string,
+  dias_funcionamento: string[],
   token: string
 ) {
-  const body = { nome, endereco, Latitude, Longitude };
+  const body = { nome, endereco, Latitude, Longitude, horario_funcionamento_inicio, horario_funcionamento_fim, dias_funcionamento };
   return apiRequest<Supermercado>("/supermercado", "POST", body, token); // POST request to create supermercado
 }
-

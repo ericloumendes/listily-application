@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text, Image } from "react-native";
-import { Button, Searchbar, Snackbar } from "react-native-paper";
+import { Button, Searchbar, Snackbar, useTheme } from "react-native-paper";
 import { useAuth } from "../../../context/AuthContext";
 import { getAllProdutos } from "../../../services/produto_service"; // Import the new service
 import { addProdutoToLista } from "../../../services/lista_service";
@@ -9,6 +9,7 @@ import { Produto } from "../../../interfaces/produto_interface"; // Import Produ
 import Toast from "react-native-toast-message";
 
 export default function AddProdutoScreen() {
+  const theme = useTheme();
   const { token } = useAuth();
   const { listaId } = useLocalSearchParams();
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -83,8 +84,8 @@ export default function AddProdutoScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Adicionar Produtos à Lista</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Adicionar Produtos à Lista</Text>
 
       {/* Searchbar to filter products */}
       <Searchbar
@@ -95,13 +96,13 @@ export default function AddProdutoScreen() {
       />
 
       {loading ? (
-        <Text>Carregando...</Text>
+        <Text style={{ color: theme.colors.onBackground }}>Carregando...</Text>
       ) : (
         <FlatList
           data={filteredProdutos}
           keyExtractor={(item) => item.pk.toString()}
           renderItem={renderProduto}
-          ListEmptyComponent={<Text style={styles.emptyText}>Nenhum Produto encontrado.</Text>}
+          ListEmptyComponent={<Text style={[styles.emptyText, { color: theme.colors.onBackground }]}>Nenhum Produto encontrado.</Text>}
         />
       )}
 
@@ -127,7 +128,7 @@ export default function AddProdutoScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  container: { flex: 1, padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   card: { marginBottom: 16, borderRadius: 8, padding: 10, backgroundColor: "#f9f9f9" },
   productImage: { width: 100, height: 100, marginBottom: 8, borderRadius: 8 },

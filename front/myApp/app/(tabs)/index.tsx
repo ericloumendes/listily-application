@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView,View, StyleSheet, FlatList, Text, Image } from "react-native";
-import { Button, Snackbar, Searchbar, Card, Divider } from "react-native-paper";
+import { Button, Snackbar, Searchbar, Card, Divider, useTheme } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
 import { getAllProdutos, getProdutoByCodebar } from "../../services/produto_service";
 import { Produto } from "../../interfaces/produto_interface"; // Import Produto type
@@ -12,6 +12,7 @@ import { Preco } from "../../interfaces/preco_interface";
 import { formatCurrency } from "../../services/monetary_service";
 
 export default function HomeScreen() {
+  const theme = useTheme();
   const { token } = useAuth();
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [filteredProdutos, setFilteredProdutos] = useState<Produto[]>([]);
@@ -25,6 +26,7 @@ export default function HomeScreen() {
     msg: "",
     ok: false,
   });
+  const [nowTick, setNowTick] = useState<number>(Date.now());
 
   useFocusEffect(useCallback(() => {
     const fetchProdutos = async () => {
@@ -42,13 +44,18 @@ export default function HomeScreen() {
     fetchProdutos();
   }, [token]));
 
-    useEffect(() => {
+  useEffect(() => {
     const getCameraPermission = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync(); // Request camera permission
       setHasPermission(status === "granted");
     };
 
     getCameraPermission(); // Request camera permission on component mount
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => setNowTick(Date.now()), 60000);
+    return () => clearInterval(id);
   }, []);
 
   const handleSearch = (query: string) => {
@@ -65,6 +72,19 @@ export default function HomeScreen() {
     } else {
       setFilteredProdutos(produtos); // Show all Produtos if search is cleared
     }
+  };
+
+  const formatTimeRemaining = (end: Date) => {
+    const now = new Date();
+    const diffMs = end.getTime() - now.getTime();
+    if (diffMs <= 0) return "";
+    const minutes = Math.floor(diffMs / 60000);
+    const days = Math.floor(minutes / (60 * 24));
+    const hours = Math.floor((minutes % (60 * 24)) / 60);
+    const mins = minutes % 60;
+    if (days > 0) return `${days}d ${hours}h`;
+    if (hours > 0) return `${hours}h ${mins}m`;
+    return `${mins}m`;
   };
 
   const handleSearchByCode = (codebar: string) => {
@@ -101,6 +121,12 @@ export default function HomeScreen() {
       return latest;
     }, null as Preco | null);
 
+    // Get all active Ofertas (not expired) and sort by data_fim ascending
+    const now = new Date();
+    const activeOfertas = (item.ofertas || [])
+      .filter((o) => new Date(o.data_fim) > now)
+      .sort((a, b) => new Date(a.data_fim).getTime() - new Date(b.data_fim).getTime());
+
     return (
       <Card mode="outlined" style={styles.card}>
         <Card.Content>
@@ -122,8 +148,24 @@ export default function HomeScreen() {
           ) : (
             <Text style={styles.productPreco}>Preço não disponível</Text>
           )}
+          {activeOfertas.length > 0 ? (
+            <View style={{ marginTop: 8 }}>
+              <Text style={styles.productOfertaTitle}>Ofertas ativas</Text>
+              {activeOfertas.map((of, idx) => (
+                <View key={`${of.tipo}-${of.preco}-${of.data_fim}`} style={{ marginTop: 4 }}>
+                  {idx > 0 ? <Divider style={styles.ofertaDivider} /> : null}
+                  <Text style={styles.productOferta}>
+                    {of.tipo} por {formatCurrency(of.preco)} • termina em {formatTimeRemaining(new Date(of.data_fim))}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          ) : null}
           <Button mode="text" onPress={() => router.push(`/registrar-valor/${item.pk}`)} style={styles.anchorButton}>
             Registrar preço
+          </Button>
+          <Button mode="text" onPress={() => router.push(`/registrar-oferta/${item.pk}`)} style={styles.anchorButton}>
+            Registrar oferta
           </Button>
         </Card.Content>
       </Card>
@@ -139,8 +181,8 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Produtos</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Produtos</Text>
 
       {/* Searchbar to filter products */}
       <View style={styles.searchContainer}>
@@ -160,13 +202,13 @@ export default function HomeScreen() {
       </View>
 
       {loading ? (
-        <Text>Carregando...</Text>
+        <Text style={{ color: theme.colors.onBackground }}>Carregando...</Text>
       ) : (
         <FlatList
           data={filteredProdutos}
           keyExtractor={(item) => item.pk.toString()}
           renderItem={renderProduto}
-          ListEmptyComponent={<Text style={styles.emptyText}>Nenhum Produto encontrado.</Text>}
+          ListEmptyComponent={<Text style={[styles.emptyText, { color: theme.colors.onBackground }]}>Nenhum Produto encontrado.</Text>}
         />
       )}
 
@@ -174,7 +216,7 @@ export default function HomeScreen() {
       <View style={styles.dividerRow}>
         <Divider style={styles.divider} />
         <Text
-          style={styles.dividerText}
+          style={[styles.dividerText, { color: theme.colors.onBackground }]}
           onPress={() => router.push("/list-supermercado")}
         >
           Não encontrou seu produto? Clique aqui para registrar.
@@ -211,13 +253,16 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  container: { flex: 1, padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   card: { marginBottom: 16, borderRadius: 8 },
   productName: { fontSize: 18, fontWeight: "bold" },
   productDescription: { fontSize: 14, color: "#555" },
   productSupermercado: { fontSize: 14, color: "#888" },
   productPreco: { fontSize: 16, color: "#2E7D32", fontWeight: "bold" }, // Price styling
+  productOferta: { fontSize: 14, color: "#1E88E5", marginTop: 4 },
+  productOfertaTitle: { fontSize: 14, fontWeight: "600", color: "#374151" },
+  ofertaDivider: { marginVertical: 4 },
   searchContainer: { flexDirection: "row", justifyContent: "space-between", marginBottom: 20 },
   searchbar: { width: "70%" },
   searchButton: { width: "28%", alignSelf: "center" },

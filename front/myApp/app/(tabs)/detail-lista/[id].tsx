@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text, Image } from "react-native";
-import { Card, Button, Snackbar, Searchbar } from "react-native-paper";
+import { Card, Button, Snackbar, Searchbar, useTheme } from "react-native-paper";
 import { useAuth } from "../../../context/AuthContext";
 import { getListaByIdCached, deleteLista, deleteProdutoFromLista } from "../../../services/lista_service";
 import { Lista } from "../../../interfaces/lista_interface";
@@ -15,8 +15,10 @@ import OfflineBanner from "../../../components/OfflineBanner";
 import { generateListaPdf } from "../../../services/pdf_service";
 import * as Sharing from "expo-sharing";
 import * as Network from "expo-network";
+import { checkAndNotifyForNewOfertas } from "../../../services/ofertas_notifier";
 
 export default function ListaDetailScreen() {
+  const theme = useTheme();
   const { id } = useLocalSearchParams();
   const { token } = useAuth();
   const { offline, setOffline } = useOffline();
@@ -73,6 +75,9 @@ export default function ListaDetailScreen() {
         const { data } = await getListaByIdCached(Number.parseInt(listaIdStr), token);
         setLista(data);
         setFilteredProdutos(data.produtos);
+        try {
+          await checkAndNotifyForNewOfertas((data.produtos || []).map(p => ({ pk: p.pk, nome: p.nome })), token);
+        } catch {}
         if (online) setOffline(false);
       } catch (err) {
         // Re-check connectivity; when offline, do not toast
@@ -181,16 +186,16 @@ export default function ListaDetailScreen() {
   };
 
   if (loading) {
-    return <Text>Carregando...</Text>;
+    return <Text style={{ color: theme.colors.onBackground }}>Carregando...</Text>;
   }
 
   if (!lista) {
-    return <Text>Lista não encontrada.</Text>;
+    return <Text style={{ color: theme.colors.onBackground }}>Lista não encontrada.</Text>;
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{lista.nome}</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>{lista.nome}</Text>
       {offline && <OfflineBanner />}
       {/* Searchbar to filter products */}
       <Searchbar
@@ -252,7 +257,7 @@ export default function ListaDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  container: { flex: 1, padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   card: { marginBottom: 16, borderRadius: 8 },
   productImage: { width: 100, height: 100, marginBottom: 8, borderRadius: 8 },

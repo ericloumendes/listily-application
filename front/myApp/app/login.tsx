@@ -7,12 +7,14 @@ import {
   HelperText,
   Snackbar,
   Divider,
+  useTheme,
 } from "react-native-paper";
 import { router } from "expo-router";
 import { useAuth } from "../context/AuthContext";
 import Toast from "react-native-toast-message";
 
 export default function LoginScreen() {
+  const theme = useTheme();
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +46,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Logo + brand */}
       <View style={styles.header}>
         {/* Put your logo at: /app/../assets/listily-logo.png */}
@@ -53,7 +55,7 @@ export default function LoginScreen() {
           style={styles.logo}
           resizeMode="contain"
         />
-        <Text variant="headlineLarge" style={styles.brand}>
+        <Text variant="headlineLarge" style={[styles.brand, { color: theme.colors.onBackground }]}>
           listily
         </Text>
       </View>
@@ -125,7 +127,7 @@ export default function LoginScreen() {
       <View style={styles.dividerRow}>
         <Divider style={styles.divider} />
         <Text
-          style={styles.dividerText}
+          style={[styles.dividerText, { color: theme.colors.onBackground }]}
           onPress={() => router.push("/register")}
         >
           Ainda não possui uma conta? Cadastre-se
@@ -147,7 +149,7 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", paddingHorizontal: 20 },
+  container: { flex: 1, paddingHorizontal: 20 },
   header: { alignItems: "center", marginTop: 24, marginBottom: 8 },
   logo: { width: 140, height: 140, marginBottom: 4 },
   brand: { color: "#2f6f46", fontWeight: "700", letterSpacing: 0.5 },

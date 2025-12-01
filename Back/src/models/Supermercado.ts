@@ -35,4 +35,22 @@ export default class Supermercado extends Model {
         allowNull: false
     })
     Longitude!: string;
+
+    @Column({
+        type: DataType.TIME,
+        allowNull: false
+    })
+    horario_funcionamento_inicio!: string;
+
+    @Column({
+        type: DataType.TIME,
+        allowNull: false
+    })
+    horario_funcionamento_fim!: string;
+
+    @Column({
+        type: DataType.ARRAY(DataType.STRING(255)),
+        allowNull: false
+    })
+    dias_funcionamento!: string[];
 }
