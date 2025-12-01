@@ -34,12 +34,9 @@ O Listily é um aplicativo projetado para ajudar os usuários a comparar preços
 | 07 | Média | Eu como USUÁRIO COMUM devo conseguir traçar uma rota optimizada à partir de uma lista de compras para assim economizar não só apenas dinheiro como também tempo. | 08 | 2 | - O usuário deve vizualizar uma rota optimizada até os supermercados que possuam os produtos pertencentes à lista selecionada; <br> - O mapa deve exibir um numeral para facilitar a idêntificação da ordem de ida até aquele supermercado; |
 | 08 | Média | Eu como USUÁRIO COMUM desejo acessar minhas listas mesmo em modo offline para que mesmo em situações sem internet eu saiba o que e onde comprar. | 03 | 2 | - O usuário deve ser capaz de acessa susas listas mesmo sem internet devidamente; <br> - As demais funções do app devem ser desativadas para evitar comparações de preços equivocadas e desatualizadas; | 
 | 09 | Média | Eu como USUÁRIO COMUM desejo exportar minhas listas para pdf facilitando sua impressão e vizualização fora do app | 05 | 2 | - O pdf deve exibir os produtos com preços; <br> - O pdf deve exibir os produtos agrupados por supermerado; |
-| 10 | Baixa | Eu como USUÁRIO COMUM e FUNCIONÁRIO DE SUPERMERCADO SUPORTADO desejo efetuar login a partir de minhas redes sociais para facilitar o processo de login. | 05 | 3 | - A aplicação deve fornecer suporte À login por redes sociais à partir das principais redes. | 
-| 11 | Baixa | Eu como USUÁRIO COMUM desejo receber notificações inteligentes para saber quando um produto que compro com frequência entrar em promoção. | 05 | 3 | - A aplicação deve exibir notificações assim que o preço de um produto comprado anteriormente cair; | 
-| 12 | Baixa | Eu como USUÁRIO COMUM desejo visualizar no mapa interativo super-mercados com ofertas especiais para facilitar esse acesso próximo. | 05 | 3 | - O mapa deve exibir informações detalhadas daquele supermercado (horaário de funcionamento e etc) além de exibir os produtos com ofertas especiais |
-| 13 | Baixa | Eu como USUÁRIO COMUM desejo que os produtos tenham seus preços atualizados automáticamente para que eu tenha uma maior confiabilidade no preço exibido pelo app. | 08 | 3 | - Deve ser feita uma API que raspe tais dados de supermercados, incluindo ofertas especiais e preços de clube; |
-| 14 | Baixa | Eu como USUÁRIO COMUM desejo visualizar guias financeiros informativos para que eu possa aprender a minimizar meus gastos enquanto comprando. | 02 | 3 | - O guia deve ser simples e lúdico; |
-| 15 | Baixa | Eu como USUÁRIO COMUM desejo trocar o tema do aplicativo para melhorar minha expriência. | 02 | 3 | - O aplicativo deve conter os temas claro (padrão) e escuro apenas; |
+| 10 | Baixa | Eu como USUÁRIO COMUM desejo visualizar no mapa interativo super-mercados com ofertas especiais para facilitar esse acesso próximo. | 05 | 3 | - O mapa deve exibir informações detalhadas daquele supermercado (horaário de funcionamento e etc) além de exibir os produtos com ofertas especiais |
+| 11 | Baixa | Eu como FUNCIONÁRIO DE SUPERMERCADO PARCEIRO desejo anunciar uma oferta especial do produto para alavancar o supermercado na aplicação. | 05 | 3 | - Deve ser feita uma API que raspe tais dados de supermercados, incluindo ofertas especiais e preços de clube; |
+| 12 | Baixa | Eu como USUÁRIO COMUM desejo trocar o tema do aplicativo para melhorar minha expriência. | 02 | 3 | - O aplicativo deve conter os temas claro (padrão) e escuro apenas; |
 
 <br>
 
@@ -52,7 +49,7 @@ Cada entrega foi realizada a partir da criação de uma **tag** em cada reposit�
 |:--:|:----------:|:-------------------|
 | 01 | 08/09/2025 a 28/09/2025 | Concluído |
 | 02 | 06/10/2025 a 26/10/2025 | Concluído |
-| 03 | 03/11/2025 a 23/11/2025 | Em breve |
+| 03 | 03/11/2025 a 23/11/2025 | Concluído |
 
 <br />
 
