@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet, TextInput, Text } from "react-native";
-import { Button, Snackbar } from "react-native-paper";
+import { Button, Snackbar, useTheme } from "react-native-paper";
 import { Camera, CameraView } from "expo-camera";
 import { useAuth } from "../../../context/AuthContext";
 import { createProduto } from "../../../services/produto_service"; // Create produto service
 import { router, useLocalSearchParams } from "expo-router";
 
 export default function ProdutoCreateScreen({ navigation }: { navigation: any }) {
+  const theme = useTheme();
   const { token } = useAuth();
   const { id } = useLocalSearchParams();
   const [nome, setNome] = useState("");
@@ -61,8 +62,8 @@ export default function ProdutoCreateScreen({ navigation }: { navigation: any })
     };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Criar Produto</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Criar Produto</Text>
 
       {/* Nome Input */}
       <TextInput
@@ -95,7 +96,7 @@ export default function ProdutoCreateScreen({ navigation }: { navigation: any })
               disabled={loading}>{loading ? "Criando..." : "Criar Produto"}</Button>
 
       {/* Feedback message */}
-      {message && <Text style={styles.message}>{message}</Text>}
+      {message && <Text style={[styles.message, { color: theme.colors.onBackground }]}>{message}</Text>}
 
         {/* Camera modal to scan barcode */}
       {isCameraOpen && (
@@ -117,10 +118,10 @@ export default function ProdutoCreateScreen({ navigation }: { navigation: any })
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" },
+  container: { flex: 1, justifyContent: "center", padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   input: { height: 40, borderColor: "#ccc", borderWidth: 1, marginBottom: 20, paddingLeft: 10 },
-  message: { color: "green", textAlign: "center", marginTop: 20 },
+  message: { textAlign: "center", marginTop: 20 },
   camera: { flex: 1, justifyContent: "flex-end" },
     dividerRow: {
     flexDirection: "row",

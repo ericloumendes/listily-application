@@ -6,6 +6,7 @@ import supermercadoRoutes from './supermercadoRoutes'
 import precoRoutes from './precoRoutes'
 import categoriaRoutes from './categoriaRoutes'
 import authRoutes from './authRoutes'
+import ofertasRoutes from './ofertasRoutes'
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/supermercado', supermercadoRoutes)
 router.use('/preco', precoRoutes)
 router.use('/categoria', categoriaRoutes)
 router.use('/auth', authRoutes)
+router.use('/ofertas', ofertasRoutes)
 
 export default router;

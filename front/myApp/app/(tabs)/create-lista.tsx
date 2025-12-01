@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { TextInput, Button, Snackbar } from "react-native-paper";
+import { TextInput, Button, Snackbar, useTheme } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
 import { createLista } from "../../services/lista_service";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 
 export default function CreateListaScreen() {
+  const theme = useTheme();
   const { token } = useAuth();
   const [nome, setNome] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,8 +43,8 @@ export default function CreateListaScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Criar Nova Lista</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Criar Nova Lista</Text>
 
       <TextInput
         label="Nome da Lista"
@@ -78,7 +79,7 @@ export default function CreateListaScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", paddingHorizontal: 20 },
+  container: { flex: 1, paddingHorizontal: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   input: { borderRadius: 12, marginBottom: 16 },
   primaryBtn: { borderRadius: 12, marginTop: 8 },

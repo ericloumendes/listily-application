@@ -3,15 +3,25 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import { useAuth } from "../../context/AuthContext";
 import { useOffline } from "../../context/OfflineContext";
+import { useTheme } from "react-native-paper";
 
 export default function TabsLayout() {
   const { token, loading } = useAuth();
   const { offline } = useOffline();
+  const theme = useTheme();
+
+  const screenOptions = {
+    headerStyle: { backgroundColor: theme.colors.surface },
+    headerTintColor: theme.colors.onSurface,
+    tabBarStyle: { backgroundColor: theme.colors.surface },
+    tabBarActiveTintColor: theme.colors.primary,
+    tabBarInactiveTintColor: theme.colors.onSurface,
+  } as const;
 
   if (loading) return null; // Or splash screen
   if (!token) return <Redirect href="/login" />; // 🚫 not logged in
   if (offline) return (
-    <Tabs>
+    <Tabs screenOptions={screenOptions}>
       <Tabs.Screen name="about" options={{ 
         title: "Minhas listas",
         tabBarIcon: ({ color }) => <EvilIcons size={28} name="navicon" color={color} />
@@ -29,11 +39,12 @@ export default function TabsLayout() {
       <Tabs.Screen name="create-supermercado" options={{ href: null, title: "Registro de supermercado" }} />
       <Tabs.Screen name="create-produto/[id]" options={{ href: null, title: "Registro de produto" }} />
       <Tabs.Screen name="route-map" options={{ href: null, title: "Mapa de rota" }} />
+      <Tabs.Screen name="registrar-oferta/[produtoId]" options={{ href: null, title: "Registrar Oferta" }} />
     </Tabs>
   );
 
   return (
-    <Tabs>
+    <Tabs screenOptions={screenOptions}>
       <Tabs.Screen name="index" options={{ 
         title: "Produtos",
         tabBarIcon: ({ color }) => <EvilIcons size={28} name="search" color={color} />
@@ -54,6 +65,7 @@ export default function TabsLayout() {
         href: null, // 🚫 removes it from the tab bar
         title: "Criar Lista",
       }} />
+      <Tabs.Screen name="registrar-oferta/[produtoId]" options={{ href: null, title: "Registrar Oferta" }} />
       <Tabs.Screen name="detail-lista/[id]" options={{
         href: null, // 🚫 removes it from the tab bar
         title: "Detalhes da Lista",

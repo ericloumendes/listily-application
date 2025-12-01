@@ -5,6 +5,7 @@ import ListaProduto from '../models/ListaProduto';
 import Supermercado from '../models/Supermercado';
 import Preco from '../models/Preco';
 import Categoria from '../models/Categoria';
+import Ofertas from '../models/Ofertas';
 
 export const produtoController = {
     save: async (req: Request, res: Response) => {
@@ -43,7 +44,7 @@ export const produtoController = {
 
     findAll: async (_req: Request, res: Response) => {
         try {
-            const produtos = await Produto.findAll({ include: [Supermercado, Preco] });
+            const produtos = await Produto.findAll({ include: [Supermercado, Preco, Ofertas] });
 
             if (!produtos.length) return res.status(404).json({ error: 'Nenhum produto encontrado' });
             return res.status(200).json(produtos);

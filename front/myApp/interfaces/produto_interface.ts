@@ -1,5 +1,6 @@
 import { Preco } from "./preco_interface"
 import { Supermercado } from "./supermercado_interface"
+import { Oferta } from "./oferta_interface"
 
 export type Produto = {
     pk: number
@@ -11,4 +12,5 @@ export type Produto = {
     supermercado: Supermercado
     categoria_pk: number
     precos: Preco[]
+    ofertas: Oferta[]
 }

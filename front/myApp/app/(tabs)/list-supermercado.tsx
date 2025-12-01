@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, Text, Image } from "react-native";
-import { Button, Snackbar, Searchbar, Card } from "react-native-paper";
+import { Button, Snackbar, Searchbar, Card, useTheme } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
 import { getAllSupermercados } from "../../services/supermercado_service"; // Import the service to fetch supermercados
 import { Supermercado } from "../../interfaces/supermercado_interface"; // Import Supermercado type
 import { router, useFocusEffect } from "expo-router";
 
 export default function SupermercadosPage() {
+  const theme = useTheme();
   const { token } = useAuth();
   const [supermercados, setSupermercados] = useState<Supermercado[]>([]);
   const [filteredSupermercados, setFilteredSupermercados] = useState<Supermercado[]>([]);
@@ -62,8 +63,8 @@ export default function SupermercadosPage() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Supermercados</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.onBackground }]}>Supermercados</Text>
 
       {/* Searchbar to filter supermercados */}
       <View style={styles.searchContainer}>
@@ -76,13 +77,13 @@ export default function SupermercadosPage() {
       </View>
 
       {loading ? (
-        <Text>Carregando...</Text>
+        <Text style={{ color: theme.colors.onBackground }}>Carregando...</Text>
       ) : (
         <FlatList
           data={filteredSupermercados}
           keyExtractor={(item) => item.pk.toString()}
           renderItem={renderSupermercado}
-          ListEmptyComponent={<Text style={styles.emptyText}>Nenhum Supermercado encontrado.</Text>}
+          ListEmptyComponent={<Text style={[styles.emptyText, { color: theme.colors.onBackground }]}>Nenhum Supermercado encontrado.</Text>}
         />
       )}
 
@@ -108,7 +109,7 @@ export default function SupermercadosPage() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  container: { flex: 1, padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   productImage: { width: 100, height: 100, marginBottom: 8, borderRadius: 8 },
   supermercadoName: { fontSize: 18, fontWeight: "bold" },
